@@ -15,7 +15,7 @@ logging.basicConfig(
 
 # --- 配置部分 ---
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
-API_URL = 'http://localhost:8000/query'
+API_URL = 'http://localhost:8001/query'
 # ----------------
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):

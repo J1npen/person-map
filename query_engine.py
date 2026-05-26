@@ -1,7 +1,10 @@
 import json
+import logging
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -86,7 +89,8 @@ def process_user_request(user_id, user_query):
             
         return reply
     except Exception as e:
-        return f"处理请求时出错: {str(e)}"
+        logger.error("Error processing request for user %s: %s", user_id, e)
+        return "处理请求时出错，请稍后重试。"
 
 if __name__ == "__main__":
     # 测试代码

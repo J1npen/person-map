@@ -1,3 +1,4 @@
+import re
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from query_engine import process_user_request
@@ -19,9 +20,11 @@ def process_query(request: QueryRequest):
         raise HTTPException(status_code=400, detail="Query cannot be empty")
     if not request.user_id:
         raise HTTPException(status_code=400, detail="User ID is required for data isolation")
-    
+    if not re.fullmatch(r"\d{1,20}", request.user_id):
+        raise HTTPException(status_code=400, detail="Invalid user ID format")
+
     answer = process_user_request(request.user_id, request.query)
     return {"answer": answer}
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8001)
